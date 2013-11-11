@@ -26,7 +26,7 @@ class SeleniumTestCompiler {
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">no commands</td></tr>
+<tr><td rowspan="1" colspan="3">${title}</td></tr>
 </thead><tbody>
 ${ rows }
 </tbody></table>
