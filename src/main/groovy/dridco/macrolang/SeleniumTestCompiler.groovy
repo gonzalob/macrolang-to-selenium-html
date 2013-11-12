@@ -2,6 +2,8 @@ package dridco.macrolang
 
 class SeleniumTestCompiler {
 
+    static String DEFAULT_ENCODING = 'UTF-8'
+
     Set<MacroDefinition> macros = [] as Set
 
     def SeleniumTestCompiler(Iterable<String> macroSources) {
@@ -12,14 +14,14 @@ class SeleniumTestCompiler {
         XmlParser parser = new XmlParser()
         def test = parser.parseText source
         def tasks = test.children()
-        def encoding = test.'@encoding'
+        def encoding = test.'@encoding' ?: DEFAULT_ENCODING
         def base = test.'@base'
         def title = test.'@title'
         def commands = new StringBuilder()
         tasks.each { Node node ->
             commands.append parse(node)
         }
-        """<?xml version="1.0" encoding="UTF-8"?>
+        """<?xml version="1.0" encoding="$encoding"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">

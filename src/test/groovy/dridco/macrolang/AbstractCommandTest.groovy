@@ -16,7 +16,7 @@ abstract class AbstractCommandTest {
 
     private static base() { 'http://localhost' }
 
-    private static encoding() { 'UTF-8' }
+    protected encoding() { 'UTF-8' }
 
     @Test
     void "can parse command"() {
