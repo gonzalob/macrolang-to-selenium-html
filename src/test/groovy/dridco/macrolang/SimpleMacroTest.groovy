@@ -21,6 +21,6 @@ class SimpleMacroTest extends AbstractCommandTest {
 
     @Override
     def definedCommands() {
-        "<logout />"
+        '<logout />'
     }
 }

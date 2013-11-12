@@ -14,6 +14,6 @@ class SingleCommandTest extends AbstractCommandTest {
 
     @Override
     def definedCommands() {
-        "<command name='waitForElementPresent' target='id=foo' />"
+        '<command name="waitForElementPresent" target="id=foo" />'
     }
 }

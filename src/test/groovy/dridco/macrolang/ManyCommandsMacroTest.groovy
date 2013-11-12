@@ -33,6 +33,6 @@ class ManyCommandsMacroTest extends AbstractCommandTest {
 
     @Override
     def definedCommands() {
-        "<find />"
+        '<find />'
     }
 }

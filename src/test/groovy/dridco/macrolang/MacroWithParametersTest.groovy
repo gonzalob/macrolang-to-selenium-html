@@ -39,6 +39,6 @@ class MacroWithParametersTest extends AbstractCommandTest {
 
     @Override
     def definedCommands() {
-        "<login url='login.mydomain.com' username='sample' password='s3cr3t' />"
+        '<login url="login.mydomain.com" username="sample" password="s3cr3t" />'
     }
 }
