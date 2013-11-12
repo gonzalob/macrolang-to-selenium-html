@@ -1,19 +1,23 @@
 package dridco.macrolang
 
-import static org.apache.commons.lang.StringUtils.EMPTY
-
 class SeleniumTestCompiler {
 
-    static compile(String source) {
+    def macros = [] as Set
+
+    def SeleniumTestCompiler(Iterable<String> macroSources) {
+        macroSources.each { macros << parseMacro(it) }
+    }
+
+    def compile(String source) {
         XmlParser parser = new XmlParser()
         def test = parser.parseText source
-        def commands = test.command
+        def tasks = test.children()
         def encoding = test.'@encoding'
         def base = test.'@base'
         def title = test.'@title'
-        def rows = new StringBuilder()
-        commands.each {
-            rows.append parseCommand( it )
+        def commands = new StringBuilder()
+        tasks.each {
+            commands.append parse(it)
         }
         """<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -27,19 +31,31 @@ class SeleniumTestCompiler {
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
 <tr><td rowspan="1" colspan="3">$title</td></tr>
-</thead><tbody>$rows
+</thead><tbody>$commands
 </tbody></table>
 </body>
 </html>"""
-	}
+    }
 
-    static parseCommand( source ) {
-        def value = source.'@value' ?: EMPTY
-        """
-<tr>
-    <td>${source.'@name'}</td>
-    <td>${source.'@target'}</td>
-    <td>$value</td>
-</tr>"""
+    private parse(source) {
+        if (source.name() == 'command') {
+            parseCommand(source)
+        } else {
+            macros.find { it.name == source.name() }
+        }
+    }
+
+    private parseMacro(String source) {
+        XmlParser parser = new XmlParser()
+        def macro = parser.parseText source
+        new Macro(name: macro.'@name', steps: parseSteps(macro.children()))
+    }
+
+    def parseSteps(Iterable steps) {
+        steps.collect { parse it }
+    }
+
+    private static parseCommand(source) {
+        new Command(name: source.'@name', target: source.'@target', value: source.'@value')
     }
 }

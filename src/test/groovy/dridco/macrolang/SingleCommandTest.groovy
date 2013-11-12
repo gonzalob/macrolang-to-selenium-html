@@ -1,9 +1,5 @@
 package dridco.macrolang
 
-import static dridco.macrolang.SeleniumTestCompiler.compile
-
-import org.junit.Test
-
 class SingleCommandTest extends AbstractCommandTest {
 
     @Override

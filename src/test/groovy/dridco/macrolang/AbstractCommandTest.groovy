@@ -2,22 +2,25 @@ package dridco.macrolang
 
 import org.junit.Test
 
-import static dridco.macrolang.SeleniumTestCompiler.compile
-
-@SuppressWarnings("GrMethodMayBeStatic")
 abstract class AbstractCommandTest {
 
-    abstract expectedCommands()
-    abstract definedCommands()
+    def tested = new SeleniumTestCompiler(macros())
 
-    private title() { 'a test case' }
+    protected abstract expectedCommands()
 
-    private base() { 'http://localhost' }
+    protected abstract definedCommands()
 
-    private encoding() { 'UTF-8' }
+    protected macros() { [] }
 
-    @Test void "can parse command"() {
-        def compiled = compile("<test title='${title()}' encoding='${encoding()}' base='${base()}'>${definedCommands()}</test>")
+    private static title() { 'a test case' }
+
+    private static base() { 'http://localhost' }
+
+    private static encoding() { 'UTF-8' }
+
+    @Test
+    void "can parse command"() {
+        def compiled = tested.compile("<test title='${title()}' encoding='${encoding()}' base='${base()}'>${definedCommands()}</test>")
         assert compiled == expected()
     }
 
