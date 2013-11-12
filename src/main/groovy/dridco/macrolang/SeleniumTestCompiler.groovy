@@ -2,7 +2,7 @@ package dridco.macrolang
 
 class SeleniumTestCompiler {
 
-    def macros = [] as Set
+    Set<MacroDefinition> macros = [] as Set
 
     def SeleniumTestCompiler(Iterable<String> macroSources) {
         macroSources.each { macros << parseMacro(it) }
@@ -16,8 +16,8 @@ class SeleniumTestCompiler {
         def base = test.'@base'
         def title = test.'@title'
         def commands = new StringBuilder()
-        tasks.each {
-            commands.append parse(it)
+        tasks.each { Node node ->
+            commands.append parse(node)
         }
         """<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -37,25 +37,20 @@ class SeleniumTestCompiler {
 </html>"""
     }
 
-    private parse(source) {
-        if (source.name() == 'command') {
-            parseCommand(source)
-        } else {
-            macros.find { it.name == source.name() }
-        }
+    Task parse(Node source) {
+        new Task(definition: definition(source), context: source.attributes())
     }
 
-    private parseMacro(String source) {
-        XmlParser parser = new XmlParser()
-        def macro = parser.parseText source
-        new Macro(name: macro.'@name', steps: parseSteps(macro.children()))
+    Definition definition(Node source) {
+        source.name() == 'command' ? parseCommand(source) : macros.find { it.name == source.name() }
     }
 
-    def parseSteps(Iterable steps) {
-        steps.collect { parse it }
+    MacroDefinition parseMacro(String source) {
+        def macro = new XmlParser().parseText source
+        new MacroDefinition(name: macro.'@name', steps: macro.children().collect { Node node -> definition node })
     }
 
-    private static parseCommand(source) {
-        new Command(name: source.'@name', target: source.'@target', value: source.'@value')
+    static CommandDefinition parseCommand(source) {
+        new CommandDefinition(name: source.'@name', target: source.'@target', value: source.'@value')
     }
 }

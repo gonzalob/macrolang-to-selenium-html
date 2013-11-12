@@ -10,7 +10,7 @@ import org.apache.maven.plugin.MojoFailureException;
  */
 public class GenerateSeleniumTestsMojo extends AbstractMojo {
 
-	@Override
-	public void execute() throws MojoExecutionException, MojoFailureException {
-	}
+    @Override
+    public void execute() throws MojoExecutionException, MojoFailureException {
+    }
 }
