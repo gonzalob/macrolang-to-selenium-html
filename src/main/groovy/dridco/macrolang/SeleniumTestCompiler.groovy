@@ -4,15 +4,15 @@ class SeleniumTestCompiler {
 
     static String DEFAULT_ENCODING = 'UTF-8'
 
-    Set<MacroDefinition> macros = [] as Set
+    Set<MacroDefinition> macros = [] as Set<MacroDefinition>
 
     def SeleniumTestCompiler(Iterable<String> macroSources) {
         macroSources.each { macros << parseMacro(it) }
     }
 
-    def compile(String source) {
+    String compile(String source) {
         XmlParser parser = new XmlParser()
-        def test = parser.parseText source
+        def test = parser.parseText(source)
         def tasks = test.children()
         def encoding = test.'@encoding' ?: DEFAULT_ENCODING
         def base = test.'@base'
@@ -48,7 +48,7 @@ class SeleniumTestCompiler {
     }
 
     MacroDefinition parseMacro(String source) {
-        def macro = new XmlParser().parseText source
+        def macro = new XmlParser().parseText(source)
         new MacroDefinition(name: macro.'@name', steps: macro.children().collect { Node node -> definition node })
     }
 
