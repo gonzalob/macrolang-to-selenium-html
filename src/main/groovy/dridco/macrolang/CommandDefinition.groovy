@@ -7,17 +7,17 @@ import static org.apache.commons.lang.StringUtils.EMPTY
 @Immutable
 class CommandDefinition implements Definition {
 
-    String name = EMPTY
-    String target = EMPTY
-    String value = EMPTY
+    String name
+    String target
+    String value
 
     @Override
     String toString() {
         """
 <tr>
-    <td>$name</td>
-    <td>$target</td>
-    <td>$value</td>
+    <td>${name ?: EMPTY}</td>
+    <td>${target ?: EMPTY}</td>
+    <td>${value ?: EMPTY}</td>
 </tr>"""
     }
 }
