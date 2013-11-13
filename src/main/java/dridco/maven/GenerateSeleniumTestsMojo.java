@@ -5,6 +5,7 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 import static java.lang.Boolean.FALSE;
 import static org.apache.commons.io.FileUtils.readFileToString;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
+import static org.apache.commons.io.filefilter.HiddenFileFilter.VISIBLE;
 import static org.codehaus.plexus.util.FileUtils.copyDirectoryStructure;
 
 /**
@@ -111,7 +113,7 @@ public class GenerateSeleniumTestsMojo extends AbstractMojo {
     }
 
     private void recurse(File origin, FileVisitor visitor) throws IOException {
-        if (origin.isDirectory()) for (File child : origin.listFiles()) recurse(child, visitor);
+        if (origin.isDirectory()) for (File child : origin.listFiles((FileFilter) VISIBLE)) recurse(child, visitor);
         else visitor.accept(origin);
     }
 
