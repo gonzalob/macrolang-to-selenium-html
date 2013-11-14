@@ -2,7 +2,7 @@ package dridco.macrolang
 
 import static org.apache.commons.lang.StringUtils.EMPTY
 
-class CommandDefinition implements Definition {
+class CommandDefinition {
 
     String name
     String target

@@ -1,6 +1,6 @@
 package dridco.macrolang
 
-class DeferredDefinition implements Definition {
+class DeferredDefinition {
 
     Set<MacroDefinition> all
     String name

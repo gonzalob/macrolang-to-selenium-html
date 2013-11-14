@@ -4,7 +4,7 @@ import groovy.text.SimpleTemplateEngine
 
 class Task {
 
-    Definition definition
+    def definition
     Map<String, String> context
 
     @Override

@@ -2,10 +2,10 @@ package dridco.macrolang
 
 import static org.apache.commons.lang.StringUtils.EMPTY
 
-class MacroDefinition implements Definition {
+class MacroDefinition {
 
     String name
-    List<Definition> steps
+    def steps
 
     @Override
     String toString() {
