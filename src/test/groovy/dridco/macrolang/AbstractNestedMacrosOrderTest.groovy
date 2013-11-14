@@ -1,10 +1,12 @@
 package dridco.macrolang
 
-class NestedMacrosTest extends AbstractCommandTest {
+abstract class AbstractNestedMacrosOrderTest extends AbstractCommandTest {
+
+    abstract boolean reverse()
 
     @Override
     protected macros() {
-        ["""
+        def macros = ["""
 <macro name='open-homepage'>
     <command name='open' target='http://localhost/' />
 </macro>
@@ -15,6 +17,9 @@ class NestedMacrosTest extends AbstractCommandTest {
 </macro>
 """
         ]
+
+        if (reverse()) macros
+        else macros.reverse()
     }
 
     @Override
