@@ -1,9 +1,9 @@
 package dridco.macrolang
 
 import groovy.text.SimpleTemplateEngine
-import groovy.transform.Immutable
+import groovy.transform.Canonical
 
-@Immutable
+@Canonical
 class Task {
 
     Definition definition
