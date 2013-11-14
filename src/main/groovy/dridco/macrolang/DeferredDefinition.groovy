@@ -7,6 +7,8 @@ class DeferredDefinition implements Definition {
 
     @Override
     String toString() {
-        all.find { it.name == name }
+        def found = all.find { it.name == name }
+        if (found) found
+        else throw new IllegalArgumentException("Requested inexisting macro $name")
     }
 }
