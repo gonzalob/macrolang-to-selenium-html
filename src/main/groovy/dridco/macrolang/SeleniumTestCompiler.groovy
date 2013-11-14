@@ -40,10 +40,10 @@ class SeleniumTestCompiler {
     }
 
     Task parse(Node source) {
-        new Task(definition: definition(source), context: source.attributes())
+        new Task(definition: define(source), context: source.attributes())
     }
 
-    Definition definition(Node source) {
+    Definition define(Node source) {
         source.name() == 'command' ? parseCommand(source) : loadMacro(source)
     }
 
@@ -53,7 +53,7 @@ class SeleniumTestCompiler {
 
     MacroDefinition parseMacro(String source) {
         def macro = new XmlParser().parseText(source)
-        new MacroDefinition(name: macro.'@name', steps: macro.children().collect { Node node -> definition node })
+        new MacroDefinition(name: macro.'@name', steps: macro.children().collect { Node node -> define node })
     }
 
     static CommandDefinition parseCommand(source) {
