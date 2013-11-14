@@ -1,10 +1,7 @@
 package dridco.macrolang
 
-import groovy.transform.Immutable
-
 import static org.apache.commons.lang.StringUtils.EMPTY
 
-@Immutable
 class CommandDefinition implements Definition {
 
     String name
