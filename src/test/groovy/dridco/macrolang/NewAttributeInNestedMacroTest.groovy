@@ -24,8 +24,7 @@ class NewAttributeInNestedMacroTest extends AbstractCommandTest {
     <td>echo</td>
     <td>hello world</td>
     <td></td>
-</tr>
-"""
+</tr>"""
     }
 
     @Override

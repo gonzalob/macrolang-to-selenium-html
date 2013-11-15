@@ -7,8 +7,7 @@ class MacroDefinition {
     String name
     def steps
 
-    @Override
-    String toString() {
-        steps.join EMPTY
+    String render(context) {
+        steps*.render(context).join EMPTY
     }
 }

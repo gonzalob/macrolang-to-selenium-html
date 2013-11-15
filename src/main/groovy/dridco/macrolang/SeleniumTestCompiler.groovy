@@ -53,7 +53,7 @@ class SeleniumTestCompiler {
 
     MacroDefinition parseMacro(String source) {
         def macro = new XmlParser().parseText(source)
-        new MacroDefinition(name: macro.'@name', steps: macro.children().collect { Node node -> define node })
+        new MacroDefinition(name: macro.'@name', steps: macro.children().collect { Node node -> parse node })
     }
 
     static CommandDefinition parseCommand(source) {

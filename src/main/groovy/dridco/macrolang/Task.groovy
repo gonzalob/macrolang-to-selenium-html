@@ -1,7 +1,5 @@
 package dridco.macrolang
 
-import groovy.text.SimpleTemplateEngine
-
 class Task {
 
     def definition
@@ -9,7 +7,10 @@ class Task {
 
     @Override
     String toString() {
-        def template = new SimpleTemplateEngine().createTemplate(definition.toString())
-        template.make(new HashMap(context)).toString()
+        render context
+    }
+
+    String render(Map<String, String> parent) {
+        definition.render context + parent
     }
 }
