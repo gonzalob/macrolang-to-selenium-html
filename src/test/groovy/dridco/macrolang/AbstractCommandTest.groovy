@@ -12,7 +12,7 @@ abstract class AbstractCommandTest {
 
     protected macros() { [] }
 
-    private static title() { 'a test case' }
+    private static title() { 'test-case' }
 
     private static base() { 'http://localhost' }
 
@@ -24,8 +24,8 @@ abstract class AbstractCommandTest {
 
     @Test
     void "can parse command"() {
-        def compiled = tested.compile("<test title='${title()}' ${sourceEncodingTag()} base='${base()}'>${definedCommands()}</test>")
-        assert compiled == expected()
+        def compiled = tested.compile "<test name='${title()}' ${sourceEncodingTag()} base='${base()}'>${definedCommands()}</test>"
+        assert compiled.code == expected()
     }
 
     def expected() {

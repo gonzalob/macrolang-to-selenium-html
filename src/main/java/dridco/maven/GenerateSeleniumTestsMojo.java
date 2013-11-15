@@ -1,5 +1,6 @@
 package dridco.maven;
 
+import dridco.macrolang.SeleniumTest;
 import dridco.macrolang.SeleniumTestCompiler;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -70,7 +71,7 @@ public class GenerateSeleniumTestsMojo extends AbstractMojo {
             if (canExecute()) {
                 collectMacros();
                 initializeCompiler();
-                compileMacrolangSources();
+                compileSources();
                 copyResources();
             } else getLog().info("Skipping execution");
         } catch (IOException e) {
@@ -79,12 +80,10 @@ public class GenerateSeleniumTestsMojo extends AbstractMojo {
     }
 
     public void collectMacros() throws IOException {
-        recurse(sources, new FileVisitor() {
+        crawl(sources, new FileVisitor() {
             @Override
             public void accept(File file) throws IOException {
-                if (isMacro(file)) {
-                    macros.add(readFileToString(file, sourceEncoding));
-                }
+                if (isMacro(file)) macros.add(readFileToString(file, sourceEncoding));
             }
         });
     }
@@ -93,16 +92,16 @@ public class GenerateSeleniumTestsMojo extends AbstractMojo {
         compiler = new SeleniumTestCompiler(macros);
     }
 
-    private void compileMacrolangSources() throws IOException {
+    private void compileSources() throws IOException {
         final String targetPath = target.getPath();
-        recurse(sources, new FileVisitor() {
+        crawl(sources, new FileVisitor() {
             @Override
             public void accept(File file) throws IOException {
                 if (!isMacro(file)) {
                     String source = readFileToString(file, sourceEncoding);
-                    String compiled = compiler.compile(source);
-                    File target = new File(targetPath, file.getName());
-                    writeStringToFile(target, compiled, targetEncoding);
+                    SeleniumTest compiled = compiler.compile(source);
+                    File target = new File(targetPath, compiled.getName());
+                    writeStringToFile(target, compiled.getCode(), targetEncoding);
                 }
             }
         });
@@ -112,8 +111,8 @@ public class GenerateSeleniumTestsMojo extends AbstractMojo {
         return candidate.getName().matches(macroFilenamePattern);
     }
 
-    private void recurse(File origin, FileVisitor visitor) throws IOException {
-        if (origin.isDirectory()) for (File child : origin.listFiles((FileFilter) VISIBLE)) recurse(child, visitor);
+    private void crawl(File origin, FileVisitor visitor) throws IOException {
+        if (origin.isDirectory()) for (File child : origin.listFiles((FileFilter) VISIBLE)) crawl(child, visitor);
         else visitor.accept(origin);
     }
 

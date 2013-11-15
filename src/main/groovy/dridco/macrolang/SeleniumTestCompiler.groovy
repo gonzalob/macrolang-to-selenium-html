@@ -10,18 +10,19 @@ class SeleniumTestCompiler {
         macroSources.each { macros << parseMacro(it) }
     }
 
-    String compile(String source) {
+    SeleniumTest compile(String source) {
         XmlParser parser = new XmlParser()
         def test = parser.parseText(source)
         def tasks = test.children()
+        def base = loadRequired test, 'base'
+        def name = loadRequired test, 'name'
         def encoding = test.'@encoding' ?: DEFAULT_ENCODING
-        def base = test.'@base'
-        def title = test.'@title'
+        def title = test.'@title' ?: name
         def commands = new StringBuilder()
         tasks.each { Node node ->
             commands.append parse(node)
         }
-        """<?xml version="1.0" encoding="$encoding"?>
+        new SeleniumTest(name: name, code: """<?xml version="1.0" encoding="$encoding"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
@@ -36,7 +37,7 @@ class SeleniumTestCompiler {
 </thead><tbody>$commands
 </tbody></table>
 </body>
-</html>"""
+</html>""")
     }
 
     Task parse(Node source) {
@@ -58,5 +59,11 @@ class SeleniumTestCompiler {
 
     static CommandDefinition parseCommand(source) {
         new CommandDefinition(name: source.'@name', target: source.'@target', value: source.'@value')
+    }
+
+    private static loadRequired(source, name) {
+        def value = source."@$name"
+        assert value != null: "Attribute $name is required"
+        value
     }
 }
