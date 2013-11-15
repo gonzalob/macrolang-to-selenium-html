@@ -1,9 +1,11 @@
 package dridco.macrolang
 
 import groovy.text.SimpleTemplateEngine
+import groovy.transform.Immutable
 
 import static org.apache.commons.lang.StringUtils.EMPTY
 
+@Immutable
 class CommandDefinition {
 
     String name
