@@ -45,11 +45,11 @@ class SeleniumTestCompiler {
     }
 
     def define(Node source) {
-        source.name() == 'command' ? parseCommand(source) : loadMacro(source)
+        source.name() == 'command' ? parseCommand(source) : loadMacro(source.name())
     }
 
-    def loadMacro(Node source) {
-        macros.find { it.name == source.name() } ?: new DeferredDefinition(all: macros, name: source.name())
+    def loadMacro(name) {
+        macros.find { it.name == name } ?: new DeferredDefinition(all: macros, name: name)
     }
 
     MacroDefinition parseMacro(String source) {
