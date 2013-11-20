@@ -3,18 +3,18 @@ package dridco.macrolang
 class MacroWithParametersTest extends AbstractCommandTest {
 
     protected macros() {
-        ["""
+        ['''
 <macro name='login'>
-    <command name='open' target='\${url}' />
-    <command name='type' target='id=username' value='\${username}' />
-    <command name='type' target='id=password' value='\${password}' />
+    <command name='open' target='${url}' />
+    <command name='type' target='id=username' value='${username}' />
+    <command name='type' target='id=password' value='${password}' />
     <command name='click' target='id=submit' />
-</macro>"""]
+</macro>''']
     }
 
     @Override
     def expectedCommands() {
-        """
+        '''
 <tr>
     <td>open</td>
     <td>login.mydomain.com</td>
@@ -34,7 +34,7 @@ class MacroWithParametersTest extends AbstractCommandTest {
     <td>click</td>
     <td>id=submit</td>
     <td></td>
-</tr>"""
+</tr>'''
     }
 
     @Override

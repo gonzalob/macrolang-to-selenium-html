@@ -3,17 +3,17 @@ package dridco.macrolang
 class ManyCommandsMacroTest extends AbstractCommandTest {
 
     protected macros() {
-        ["""
+        ['''
 <macro name='find'>
     <command name='open' target='http://localhost/index.html' />
     <command name='type' target='id=keywords' value='lookup keywords' />
     <command name='click' target='id=search' />
-</macro>"""]
+</macro>''']
     }
 
     @Override
     def expectedCommands() {
-        """
+        '''
 <tr>
     <td>open</td>
     <td>http://localhost/index.html</td>
@@ -28,7 +28,7 @@ class ManyCommandsMacroTest extends AbstractCommandTest {
     <td>click</td>
     <td>id=search</td>
     <td></td>
-</tr>"""
+</tr>'''
     }
 
     @Override

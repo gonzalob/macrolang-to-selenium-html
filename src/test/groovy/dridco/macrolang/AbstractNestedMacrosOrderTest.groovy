@@ -6,16 +6,16 @@ abstract class AbstractNestedMacrosOrderTest extends AbstractCommandTest {
 
     @Override
     protected macros() {
-        def macros = ["""
-<macro name='open-homepage'>
-    <command name='open' target='http://localhost/' />
+        def macros = ['''
+<macro name="open-homepage">
+    <command name="open" target="http://localhost/" />
 </macro>
-""", """
-<macro name='my-account'>
+''', '''
+<macro name="my-account">
     <open-homepage />
-    <command name='click' target='id=my-account' />
+    <command name="click" target="id=my-account" />
 </macro>
-"""
+'''
         ]
 
         if (reverse()) macros
@@ -24,7 +24,7 @@ abstract class AbstractNestedMacrosOrderTest extends AbstractCommandTest {
 
     @Override
     protected expectedCommands() {
-        """
+        '''
 <tr>
     <td>open</td>
     <td>http://localhost/</td>
@@ -34,7 +34,7 @@ abstract class AbstractNestedMacrosOrderTest extends AbstractCommandTest {
     <td>click</td>
     <td>id=my-account</td>
     <td></td>
-</tr>"""
+</tr>'''
     }
 
     @Override

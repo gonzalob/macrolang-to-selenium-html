@@ -4,12 +4,12 @@ class SingleCommandTest extends AbstractCommandTest {
 
     @Override
     def expectedCommands() {
-        """
+        '''
 <tr>
     <td>waitForElementPresent</td>
     <td>id=foo</td>
     <td></td>
-</tr>"""
+</tr>'''
     }
 
     @Override

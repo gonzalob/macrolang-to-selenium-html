@@ -4,23 +4,22 @@ class NestedMacrosWithParametersTest extends AbstractCommandTest {
 
     @Override
     protected macros() {
-        ["""
+        ['''
 <macro name='login'>
     <command name='open' target='http://localhost' />
-    <command name='type' target='id=username' value='\$username' />
+    <command name='type' target='id=username' value='$username' />
     <command name='click' target='id=submit' />
 </macro>
-""", """
+''', '''
 <macro name='check-balance'>
-    <login username='\$username' />
+    <login username='$username' />
     <command name='click' target='id=balance' />
-</macro>
-"""]
+</macro>''']
     }
 
     @Override
     protected expectedCommands() {
-        """
+        '''
 <tr>
     <td>open</td>
     <td>http://localhost</td>
@@ -40,7 +39,7 @@ class NestedMacrosWithParametersTest extends AbstractCommandTest {
     <td>click</td>
     <td>id=balance</td>
     <td></td>
-</tr>"""
+</tr>'''
     }
 
     @Override

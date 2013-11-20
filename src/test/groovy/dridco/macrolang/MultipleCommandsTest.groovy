@@ -4,7 +4,7 @@ class MultipleCommandsTest extends AbstractCommandTest {
 
     @Override
     def expectedCommands() {
-        """
+        '''
 <tr>
     <td>type</td>
     <td>input[name=username]</td>
@@ -14,12 +14,14 @@ class MultipleCommandsTest extends AbstractCommandTest {
     <td>click</td>
     <td>input[type=submit]</td>
     <td></td>
-</tr>"""
+</tr>'''
     }
 
     @Override
     def definedCommands() {
-        """<command name='type' target='input[name=username]' value='foo@bar.com' />
-<command name='click' target='input[type=submit]' />"""
+        '''
+<command name='type' target='input[name=username]' value='foo@bar.com' />
+<command name='click' target='input[type=submit]' />
+'''
     }
 }
