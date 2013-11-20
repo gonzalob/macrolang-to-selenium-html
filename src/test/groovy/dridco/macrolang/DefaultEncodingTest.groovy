@@ -5,7 +5,7 @@ import static org.apache.commons.lang.StringUtils.EMPTY
 class DefaultEncodingTest extends AbstractCommandTest {
 
     @Override
-    protected encoding() { 'KOI-8' }
+    protected sourceEncodingTag() { EMPTY }
 
     @Override
     protected expectedCommands() { EMPTY }
