@@ -69,5 +69,15 @@ The _encoding_ attribute is optional, and defaults to *UTF-8*
 Macros are groups of commands, and can receive arbitrary arguments prefixed
 with the $ symbol.
 
+## Parametrized Macro Calls ##
+
+```xml
+<macro name="login-via">
+ <parametrized-macro name="login-$socialNetwork" />
+</macro>
+```
+
+Parametrized macro calls are calls to macros with parameters in their names.
+
 # License #
 This software is licensed under the [GPLv3](http://www.gnu.org/licenses/gpl.txt).
