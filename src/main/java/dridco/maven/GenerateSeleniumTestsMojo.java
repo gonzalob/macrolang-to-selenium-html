@@ -116,7 +116,7 @@ public class GenerateSeleniumTestsMojo extends AbstractMojo {
         else visitor.accept(origin);
     }
 
-    private static interface FileVisitor {
+    private interface FileVisitor {
         void accept(File file) throws IOException;
     }
 
