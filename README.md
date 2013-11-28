@@ -18,7 +18,7 @@ some feature to the application. The testers record some tests to
 automatically check its validity. Both commit to the SCM. Developers in Java,
 testers in Selenium IDE's HTML syntax. Integration servers then translate the
 HTML tests into Java code using
-[https://github.com/gonzalob/selenium-htmltojava-maven-plugin](Selenium HTML to Java), 
+[Selenium HTML to Java](https://github.com/gonzalob/selenium-htmltojava-maven-plugin), 
 compiles and runs it with each commit.
 
 Many of the recorded tests have tasks, groups of commands, that are repeated
