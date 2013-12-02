@@ -4,7 +4,7 @@ class ParameterReplacementOnMacroNameTest extends AbstractCommandTest {
 
     @Override
     protected macros() {
-        [ '''
+        ['''
 <macro name="echo-something">
     <parametrized-macro name="echo-$what" />
 </macro>
@@ -16,7 +16,7 @@ class ParameterReplacementOnMacroNameTest extends AbstractCommandTest {
 <macro name="echo-no">
     <command name="echo" target="no" />
 </macro>
-''' ]
+''']
     }
 
     @Override

@@ -13,21 +13,20 @@ class CommandDefinition {
     String value
 
     String render(Map<String, String> context) {
-        def template = new SimpleTemplateEngine().createTemplate("""
+        def template = new SimpleTemplateEngine().createTemplate """
 <tr>
     <td>${name ?: EMPTY}</td>
     <td>${target ?: EMPTY}</td>
     <td>${value ?: EMPTY}</td>
-</tr>""")
+</tr>"""
         def squeezed = squeeze context
         template.make(squeezed).toString()
     }
 
     static squeeze(Map<String, String> source) {
-        source.collectEntries {
-            def template = new SimpleTemplateEngine().createTemplate it.value.toString()
-            def value = template.make(new HashMap(source))
-            [it.key, value.toString()]
+        source.collectEntries { key, value ->
+            def template = new SimpleTemplateEngine().createTemplate value.toString()
+            [key, template.make(new HashMap(source))]
         }
     }
 }

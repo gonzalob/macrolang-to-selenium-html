@@ -15,8 +15,7 @@ abstract class AbstractNestedMacrosOrderTest extends AbstractCommandTest {
     <open-homepage />
     <command name="click" target="id=my-account" />
 </macro>
-'''
-        ]
+''']
 
         if (reverse()) macros
         else macros.reverse()
