@@ -29,6 +29,7 @@ public class GenerateSeleniumTestsMojo extends AbstractMojo {
      * @parameter default-value="${basedir}/src/test/macrolang"
      */
     private File sources;
+
     /**
      * Directory for resources to be copied without processing to the
      * destination directory.
@@ -38,15 +39,18 @@ public class GenerateSeleniumTestsMojo extends AbstractMojo {
      * @parameter
      */
     private File resources;
+
     /**
      * @parameter default-value="${project.build.directory}/generated-test-sources/macrolang"
      * @readonly
      */
     private File target;
+
     /**
      * @parameter default-value="^.*\.macro$"
      */
     private String macroFilenamePattern;
+
     /**
      * @parameter expression="${macrolang.skip}" default-value="true"
      */
@@ -83,7 +87,10 @@ public class GenerateSeleniumTestsMojo extends AbstractMojo {
         crawl(sources, new FileVisitor() {
             @Override
             public void accept(File file) throws IOException {
-                if (isMacro(file)) macros.add(readFileToString(file, sourceEncoding));
+                if (isMacro(file)) {
+                    getLog().info("Processing macro source " + file.getName());
+                    macros.add(readFileToString(file, sourceEncoding));
+                }
             }
         });
     }
@@ -98,6 +105,7 @@ public class GenerateSeleniumTestsMojo extends AbstractMojo {
             @Override
             public void accept(File file) throws IOException {
                 if (!isMacro(file)) {
+                    getLog().info("Processing test source " + file.getName());
                     String source = readFileToString(file, sourceEncoding);
                     SeleniumTest compiled = compiler.compile(source);
                     File target = new File(targetPath, compiled.getName());
@@ -122,8 +130,10 @@ public class GenerateSeleniumTestsMojo extends AbstractMojo {
 
     private void copyResources() throws IOException {
         if (resources != null) {
-            if (resources.isDirectory()) copyDirectoryStructure(resources, target);
-            else getLog().warn("Specified resources path is not a directory, or does not exist");
+            if (resources.isDirectory()) {
+                getLog().info("Copying resources");
+                copyDirectoryStructure(resources, target);
+            } else getLog().warn("Specified resources path is not a directory, or does not exist");
         }
 
     }
