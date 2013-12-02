@@ -7,12 +7,12 @@ class NestedMacrosWithParametersTest extends AbstractCommandTest {
         ['''
 <macro name='login'>
     <command name='open' target='http://localhost' />
-    <command name='type' target='id=username' value='$username' />
+    <command name='type' target='id=username' value='$user' />
     <command name='click' target='id=submit' />
 </macro>
 ''', '''
 <macro name='check-balance'>
-    <login username='$username' />
+    <login user='$username' />
     <command name='click' target='id=balance' />
 </macro>''']
     }

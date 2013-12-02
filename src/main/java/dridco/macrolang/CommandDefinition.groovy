@@ -19,6 +19,15 @@ class CommandDefinition {
     <td>${target ?: EMPTY}</td>
     <td>${value ?: EMPTY}</td>
 </tr>""")
-        template.make(context).toString()
+        def squeezed = squeeze context
+        template.make(squeezed).toString()
+    }
+
+    static squeeze(Map<String, String> source) {
+        source.collectEntries {
+            def template = new SimpleTemplateEngine().createTemplate it.value.toString()
+            def value = template.make(new HashMap(source))
+            [it.key, value.toString()]
+        }
     }
 }
