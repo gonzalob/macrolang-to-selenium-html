@@ -1,7 +1,10 @@
 package dridco.macrolang
 
+import groovy.transform.EqualsAndHashCode
+
 import static org.apache.commons.lang.StringUtils.EMPTY
 
+@EqualsAndHashCode(includes = 'name')
 class MacroDefinition implements Definition {
 
     String name

@@ -1,24 +1,34 @@
 package dridco.macrolang
 
 import groovy.text.SimpleTemplateEngine
-import groovy.transform.Immutable
+import groovy.text.Template
+import groovy.transform.EqualsAndHashCode
 
 import static org.apache.commons.lang.StringUtils.EMPTY
 
-@Immutable
+@EqualsAndHashCode(includeFields = true, excludes = 'template')
 class CommandDefinition implements Definition {
 
-    String name = EMPTY
-    String target = EMPTY
-    String value = EMPTY
+    private String name
+    private String target
+    private String value
 
-    String render(Map<String, String> context) {
-        def template = new SimpleTemplateEngine().createTemplate """
+    private Template template
+
+    def CommandDefinition(String name, String target, String value) {
+        this.name = name
+        this.target = target
+        this.value = value
+
+        template = new SimpleTemplateEngine().createTemplate """
 <tr>
     <td>${name ?: EMPTY}</td>
     <td>${target ?: EMPTY}</td>
     <td>${value ?: EMPTY}</td>
 </tr>"""
+    }
+
+    String render(Map<String, String> context) {
         def squeezed = squeeze context
         template.make(squeezed).toString()
     }

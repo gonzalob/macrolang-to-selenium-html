@@ -4,7 +4,8 @@ class SeleniumTestCompiler {
 
     static String DEFAULT_ENCODING = 'UTF-8'
 
-    Set<MacroDefinition> macros = [] as Set<MacroDefinition>
+    Set<MacroDefinition> macros = []
+    Set<Definition> definitions = new HashSet<Definition>()
 
     def SeleniumTestCompiler(Iterable<String> macroSources) {
         macroSources.each { macros << parseMacro(it) }
@@ -46,25 +47,28 @@ class SeleniumTestCompiler {
 
     def define(Node source) {
         def tag = source.name()
+        def definition
         switch (tag) {
             case 'command':
-                parseCommand source
+                definition = parseCommand source
                 break;
             case 'parametrized-macro':
-                deferred source.attribute('name')
+                definition = deferred source.attribute('name').toString()
                 break;
             default:
-                loadMacro tag
+                definition = loadMacro tag.toString()
                 break;
         }
+        definitions.add definition
+        definitions.find { it == definition }
     }
 
-    Definition loadMacro(name) {
+    Definition loadMacro(String name) {
         macros.find { it.name == name } ?: deferred(name)
     }
 
-    DeferredDefinition deferred(name) {
-        new DeferredDefinition(all: macros, name: name)
+    DeferredDefinition deferred(String name) {
+        new DeferredDefinition(name, macros)
     }
 
     private MacroDefinition parseMacro(String source) {
@@ -72,8 +76,8 @@ class SeleniumTestCompiler {
         new MacroDefinition(name: macro.'@name', steps: macro.children().collect { Node node -> parse node })
     }
 
-    private static CommandDefinition parseCommand(source) {
-        new CommandDefinition(name: source.'@name', target: source.'@target', value: source.'@value')
+    private static CommandDefinition parseCommand(Node source) {
+        new CommandDefinition(source.'@name', source.'@target', source.'@value')
     }
 
     private static loadRequired(source, name) {
