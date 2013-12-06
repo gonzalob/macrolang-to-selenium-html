@@ -35,8 +35,12 @@ class CommandDefinition implements Definition {
 
     static squeeze(Map<String, String> source) {
         source.collectEntries { key, value ->
-            def template = new SimpleTemplateEngine().createTemplate value.toString()
-            [key, template.make(new HashMap(source))]
+            def newValue
+            if (value.contains('$')) {
+                def template = new SimpleTemplateEngine().createTemplate value.toString()
+                newValue = template.make(new HashMap(source))
+            } else newValue = value
+            [key, newValue]
         }
     }
 }
