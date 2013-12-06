@@ -4,6 +4,8 @@ import groovy.text.SimpleTemplateEngine
 import groovy.text.Template
 import groovy.transform.EqualsAndHashCode
 
+import java.util.concurrent.ConcurrentHashMap
+
 import static org.apache.commons.lang.StringUtils.EMPTY
 
 @EqualsAndHashCode(includeFields = true, excludes = 'template')
@@ -34,13 +36,17 @@ class CommandDefinition implements Definition {
     }
 
     static squeeze(Map<String, String> source) {
-        source.collectEntries { key, value ->
-            def newValue
-            if (value.contains('$')) {
-                def template = new SimpleTemplateEngine().createTemplate value.toString()
-                newValue = template.make(new HashMap(source))
-            } else newValue = value
-            [key, newValue]
+        source.findAll { it.value instanceof String }.collectEntries { key, value ->
+            if (value.toString().contains('$')) {
+                def template = templates.get(value.toString())
+                return [key, template.make(new HashMap(source))]
+            } else {
+                return [key, value]
+            }
         }
+    }
+
+    static Map<String, Template> templates = new ConcurrentHashMap<String, Template>().withDefault {
+        new SimpleTemplateEngine().createTemplate it
     }
 }
