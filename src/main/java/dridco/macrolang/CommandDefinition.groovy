@@ -6,11 +6,11 @@ import groovy.transform.Immutable
 import static org.apache.commons.lang.StringUtils.EMPTY
 
 @Immutable
-class CommandDefinition {
+class CommandDefinition implements Definition {
 
-    String name
-    String target
-    String value
+    String name = EMPTY
+    String target = EMPTY
+    String value = EMPTY
 
     String render(Map<String, String> context) {
         def template = new SimpleTemplateEngine().createTemplate """

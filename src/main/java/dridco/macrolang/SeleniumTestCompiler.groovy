@@ -59,20 +59,20 @@ class SeleniumTestCompiler {
         }
     }
 
-    def loadMacro(name) {
+    Definition loadMacro(name) {
         macros.find { it.name == name } ?: deferred(name)
     }
 
-    def deferred(name) {
+    DeferredDefinition deferred(name) {
         new DeferredDefinition(all: macros, name: name)
     }
 
-    MacroDefinition parseMacro(String source) {
+    private MacroDefinition parseMacro(String source) {
         def macro = new XmlParser().parseText(source)
         new MacroDefinition(name: macro.'@name', steps: macro.children().collect { Node node -> parse node })
     }
 
-    static CommandDefinition parseCommand(source) {
+    private static CommandDefinition parseCommand(source) {
         new CommandDefinition(name: source.'@name', target: source.'@target', value: source.'@value')
     }
 

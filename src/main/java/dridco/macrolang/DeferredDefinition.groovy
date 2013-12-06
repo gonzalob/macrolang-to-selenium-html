@@ -2,7 +2,7 @@ package dridco.macrolang
 
 import groovy.text.SimpleTemplateEngine
 
-class DeferredDefinition {
+class DeferredDefinition implements Definition {
 
     Set<MacroDefinition> all
     String name

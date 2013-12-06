@@ -2,7 +2,7 @@ package dridco.macrolang
 
 class Task {
 
-    def definition
+    Definition definition
     Map<String, String> context
 
     @Override
