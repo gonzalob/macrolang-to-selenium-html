@@ -3,11 +3,13 @@ package dridco.macrolang
 import groovy.text.SimpleTemplateEngine
 import groovy.text.Template
 import groovy.transform.EqualsAndHashCode
+import groovy.util.logging.Slf4j
 
 import java.util.concurrent.ConcurrentHashMap
 
 import static org.apache.commons.lang.StringUtils.EMPTY
 
+@Slf4j
 @EqualsAndHashCode(includeFields = true, excludes = 'template')
 class CommandDefinition implements Definition {
 
@@ -31,6 +33,7 @@ class CommandDefinition implements Definition {
     }
 
     String render(Map<String, String> context) {
+        log.debug "Processing command $name"
         def squeezed = squeeze context
         template.make(squeezed).toString()
     }

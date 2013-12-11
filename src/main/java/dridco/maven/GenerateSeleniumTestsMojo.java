@@ -4,6 +4,7 @@ import dridco.macrolang.SeleniumTest;
 import dridco.macrolang.SeleniumTestCompiler;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.slf4j.impl.StaticLoggerBinder;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -71,6 +72,7 @@ public class GenerateSeleniumTestsMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
+        StaticLoggerBinder.getSingleton().setLog(getLog());
         try {
             if (canExecute()) {
                 collectMacros();
@@ -88,7 +90,7 @@ public class GenerateSeleniumTestsMojo extends AbstractMojo {
             @Override
             public void accept(File file) throws IOException {
                 if (isMacro(file)) {
-                    getLog().info("Processing macro source " + file.getName());
+                    getLog().info("Reading macro source " + file.getName());
                     macros.add(readFileToString(file, sourceEncoding));
                 }
             }
@@ -105,7 +107,7 @@ public class GenerateSeleniumTestsMojo extends AbstractMojo {
             @Override
             public void accept(File file) throws IOException {
                 if (!isMacro(file)) {
-                    getLog().info("Processing test source " + file.getName());
+                    getLog().info("Reading test source " + file.getName());
                     String source = readFileToString(file, sourceEncoding);
                     SeleniumTest compiled = compiler.compile(source);
                     File target = new File(targetPath, compiled.getName());

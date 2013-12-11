@@ -1,5 +1,8 @@
 package dridco.macrolang
 
+import groovy.util.logging.Slf4j
+
+@Slf4j
 class SeleniumTestCompiler {
 
     static String DEFAULT_ENCODING = 'UTF-8'
@@ -15,8 +18,9 @@ class SeleniumTestCompiler {
         XmlParser parser = new XmlParser()
         def test = parser.parseText(source)
         def tasks = test.children()
-        def base = loadRequired test, 'base'
         def name = loadRequired test, 'name'
+        log.info "Compiling test case $name"
+        def base = loadRequired test, 'base'
         def encoding = test.'@encoding' ?: DEFAULT_ENCODING
         def title = test.'@title' ?: name
         def commands = new StringBuilder()
@@ -73,7 +77,9 @@ class SeleniumTestCompiler {
 
     private MacroDefinition parseMacro(String source) {
         def macro = new XmlParser().parseText(source)
-        new MacroDefinition(name: macro.'@name', steps: macro.children().collect { Node node -> parse node })
+        def name = macro.'@name'
+        log.info "Registered macro $name"
+        new MacroDefinition(name: name, steps: macro.children().collect { Node node -> parse node })
     }
 
     private static CommandDefinition parseCommand(Node source) {
