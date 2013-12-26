@@ -27,8 +27,8 @@ class CommandDefinition implements Definition {
         template = new SimpleTemplateEngine().createTemplate """
 <tr>
     <td>${name ?: EMPTY}</td>
-    <td>${target ?: EMPTY}</td>
-    <td>${value ?: EMPTY}</td>
+    <td>${escapeHtml target}</td>
+    <td>${escapeHtml value}</td>
 </tr>"""
     }
 
@@ -40,11 +40,22 @@ class CommandDefinition implements Definition {
 
     static squeeze(Map<String, String> source) {
         source.findAll { it.value instanceof String }.collectEntries { key, value ->
-            [key, templates.get(value.toString()).make(new HashMap(source))]
+            def replacedValue = templates.get(value.toString()).make(new HashMap(source)).toString()
+            [key, CommandDefinition.escapeHtml(replacedValue)]
         }
     }
 
     static Map<String, Template> templates = new ConcurrentHashMap<String, Template>().withDefault {
         new SimpleTemplateEngine().createTemplate it
+    }
+
+    static escapeHtml = { text ->
+        (text ?: EMPTY).toString().collectReplacements {
+            switch (it) {
+                case '<': return '&lt;'
+                case '>': return '&gt;'
+                default: return null
+            }
+        }
     }
 }
