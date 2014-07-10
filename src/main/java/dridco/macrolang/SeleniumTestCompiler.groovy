@@ -11,7 +11,11 @@ class SeleniumTestCompiler {
     Set<Definition> definitions = new HashSet<Definition>()
 
     def SeleniumTestCompiler(Iterable<String> macroSources) {
-        macroSources.each { macros << parseMacro(it) }
+        macroSources.each {
+			def current = parseMacro(it)
+			if(macros.find { it.name == current.name }) { throw new IllegalArgumentException("Duplicate macro definition with id ${current.name}") }
+			macros << current
+		}
     }
 
     SeleniumTest compile(String source) {
