@@ -131,7 +131,7 @@
         <url>https://github.com/gonzalob/macrolang-to-selenium-html/issues</url>
     </issueManagement>
     <scm>
-        <connection>scm:git:git://github.com/gonzalob/macrolang-to-selenium-html.git</connection>
+        <connection>scm:git:https://github.com/gonzalob/macrolang-to-selenium-html.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/gonzalob/macrolang-to-selenium-html.git</developerConnection>
         <url>https://github.com/gonzalob/macrolang-to-selenium-html</url>
     </scm>
