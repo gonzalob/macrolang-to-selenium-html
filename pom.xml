@@ -124,7 +124,7 @@
     </build>
     <ciManagement>
         <system>jenkins</system>
-        <url>http://ciarq.vdc.dridco.com/jenkins</url>
+        <url>http://ciarq.dridco.com/jenkins</url>
     </ciManagement>
     <issueManagement>
         <system>github</system>
