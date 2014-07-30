@@ -124,7 +124,7 @@
     </build>
     <ciManagement>
         <system>jenkins</system>
-        <url>http://ciarq.dridco.com/jenkins</url>
+        <url>http://ciarq.dridco.com/jenkins/job/MacroLang%20Maven%20Plugin/</url>
     </ciManagement>
     <issueManagement>
         <system>github</system>

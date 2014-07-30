@@ -79,5 +79,12 @@ with the $ symbol.
 
 Parametrized macro calls are calls to macros with parameters in their names.
 
+# Project Links #
+
+ * [Github Project](http://bit.ly/1oc4FqT)
+ * [Continuous Integration](http://bit.ly/1nUjQLk) ![Build Status](http://ciarq.dridco.com/jenkins/buildStatus/icon?job=MacroLang Maven Plugin)
+ * [Quality Management](http://bit.ly/1s4VY6U)
+
 # License #
 This software is licensed under the [GPLv3](http://www.gnu.org/licenses/gpl.txt).
+
