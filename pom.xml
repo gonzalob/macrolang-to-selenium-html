@@ -135,15 +135,4 @@
         <developerConnection>scm:git:ssh://git@github.com/gonzalob/macrolang-to-selenium-html.git</developerConnection>
         <url>https://github.com/gonzalob/macrolang-to-selenium-html</url>
     </scm>
-    <!-- dridco's private repositories. you should be able to build the jar without trouble, though -->
-    <distributionManagement>
-        <repository>
-            <id>dridco.release</id>
-            <url>http://repos.vdc.dridco.com/nexus/content/repositories/releases</url>
-        </repository>
-        <snapshotRepository>
-            <id>dridco.snapshot</id>
-            <url>http://repos.vdc.dridco.com/nexus/content/repositories/snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
 </project>
